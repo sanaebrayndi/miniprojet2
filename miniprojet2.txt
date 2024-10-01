@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <string.h>
+int n;
+struct contact{
+    char nom[50];
+    char telephone[50];
+    char email[60];
+};
+struct contact C[100];
+int nbrcontact=0;
+
+void ajouter_contact(){
+    if(nbrcontact>=100){
+      printf("impossible d'ajouter un contact car il est plein:\n");
+    }else{
+        printf("entrer le nom:");
+        scanf("%s",C[nbrcontact].nom);
+        printf("entrer le telephone:");
+        scanf("%s",C[nbrcontact].telephone);
+        printf("entrer l'email:");
+        scanf("%s",C[nbrcontact].email);
+     printf("\n***le contact est ajoutee***\n");
+    }
+  nbrcontact++;
+}
+void afficher_un_contact(){
+    int i;
+    if(nbrcontact==0){
+       printf("aucune contact:");
+    }else{
+        for(int i=0;i<nbrcontact;i++){
+        printf("\n***contact***\n ");
+        printf("nom: %s\n",C[i].nom);
+        printf("telephone: %s\n",C[i].telephone);
+        printf("l'email: %s\n",C[i].email);
+    }
+    }
+}
+void modifier_un_contact(){
+    char nom[50];
+    int i;
+    char telephone[50];
+    char email[60];
+    printf("entrer le nom:");
+    scanf("%s",&nom);
+  for (int i = 0; i < nbrcontact; i++) {
+        if (strcmp(C[i].nom, nom) == 0) {
+            printf("Nouvelle telephone: ");
+            scanf("%s", C[i].telephone);
+            printf("Nouvelle email: ");
+            scanf("%s", C[i].email);
+            printf("Contact modifié avec succès!\n");
+            return;
+        }
+    }
+
+    printf("Aucun contact trouvé avec ce nom.\n");
+}
+ void recherche_un_contact(){
+    char nom[100];
+    printf("entrer un nom:");
+    scanf("%s",nom);
+  for (int i = 0; i < nbrcontact; i++) {
+        if (strcmp(C[i].nom, nom) == 0) {
+            printf("Contact trouvé:\n");
+            printf("Nom: %s\n", C[i].nom);
+            printf("Téléphone: %s\n", C[i].telephone);
+            printf("Email: %s\n", C[i].email);
+            return;
+       }else{
+           printf("aucune contact trouvee\n");
+       }
+   }
+}
+void supprime_un_contact(){
+    int i;
+    char nom[50];
+    int j;
+    printf("Entrez le nom du contact à supprimer: ");
+    scanf("%s", nom);
+
+    for (int i = 0; i < nbrcontact; i++) {
+        if (strcmp(C[i].nom, nom) == 0) {
+            for (int j = i; j < nbrcontact - 1; j++) {
+                C[j] = C[j + 1];
+            }
+            nbrcontact--;
+            printf("Contact supprimé avec succès!\n");
+            return;
+        }
+    }
+}
+int main() {
+    int choix;
+
+    do {
+        printf("\nCarnet de Contacts:\n");
+        printf("1. Ajouter un contact\n");
+        printf("2. Afficher tous les contacts\n");
+        printf("3. Rechercher un contact\n");
+        printf("4. Modifier un contact\n");
+        printf("5. Supprimer un contact\n");
+        printf("6. Quitter\n");
+        printf("Choisissez une option: ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                ajouter_contact();
+                break;
+            case 2:
+                afficher_un_contact();
+                break;
+            case 3:
+                recherche_un_contact();
+                break;
+            case 4:
+                modifier_un_contact();
+                break;
+            case 5:
+                supprime_un_contact();
+                break;
+            case 6:
+                printf("Au revoir!\n");
+                break;
+            default:
+                printf("Option invalide. Veuillez réessayer.\n");
+        }
+    } while (choix != 6);
+
+    return 0;
+}
